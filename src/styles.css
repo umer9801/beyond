@@ -1,0 +1,171 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-script: cursive;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-deep: var(--primary-deep);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-surface: var(--surface);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-lift: var(--shadow-lift);
+}
+
+:root {
+  --radius: 0.875rem;
+  --background: #FCFDF9;                 /* Light cream/white */
+  --surface: #DDF4EA;                    /* Light mint sections */
+  --foreground: #17352E;                 /* Dark green headings */
+  --card: #FFFFFF;
+  --card-foreground: #17352E;
+  --popover: #FFFFFF;
+  --popover-foreground: #17352E;
+  --primary: #63C7A5;                    /* Mint green primary */
+  --primary-foreground: #FFFFFF;
+  --primary-deep: #4EAF8F;               /* Button hover */
+  --primary-soft: #DDF4EA;               /* Light sections */
+  --secondary: #DDF4EA;                  /* Light mint */
+  --secondary-foreground: #17352E;
+  --muted: #DDF4EA;
+  --muted-foreground: #526660;           /* Body text gray-green */
+  --accent: #F4C95D;                     /* Yellow accent */
+  --accent-foreground: #17352E;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: #C8E6D7;                     /* Light mint border */
+  --input: #C8E6D7;
+  --ring: #63C7A5;
+  --shadow-soft: 0 1px 2px rgba(23, 53, 46, 0.04), 0 8px 24px -12px rgba(23, 53, 46, 0.12);
+  --shadow-lift: 0 2px 4px rgba(23, 53, 46, 0.04), 0 30px 60px -30px rgba(23, 53, 46, 0.28);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.bg-grid-white\/5 {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+@utility eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #63C7A5;
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+@utility script {
+  font-family: var(--font-script);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+@utility container-x {
+  width: 100%;
+  max-width: 82rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  @media (min-width: 768px) { padding-inline: 2.5rem; }
+}
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  &.is-in { opacity: 1; transform: none; }
+}
+
+@utility clip-reveal {
+  clip-path: inset(12% 12% 12% 12% round 1.5rem);
+  transition: clip-path 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  &.is-in { clip-path: inset(0 0 0 0 round 1.5rem); }
+}
+
+@utility red-line {
+  height: 2px;
+  background: var(--color-primary);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s;
+  .is-in & , &.is-in { transform: scaleX(1); }
+}
+
+@utility dirty-filter {
+  filter: sepia(0.55) saturate(0.6) brightness(0.72) contrast(0.95);
+}
+
+@keyframes float-y { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+@keyframes shine { 0% { transform: translateX(-120%) skewX(-20deg) } 60%,100% { transform: translateX(220%) skewX(-20deg) } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(24px) } to { opacity: 1; transform: none } }
+@keyframes scale-in { from { opacity: 0; transform: scale(0.94) } to { opacity: 1; transform: none } }
+@keyframes slide-right { from { opacity: 0; transform: translateX(-24px) } to { opacity: 1; transform: none } }
+@keyframes slide-left { from { opacity: 0; transform: translateX(24px) } to { opacity: 1; transform: none } }
+@keyframes pulse-glow { 0%,100% { box-shadow: 0 0 20px var(--color-primary-soft) } 50% { box-shadow: 0 0 40px var(--color-primary) } }
+@keyframes rotate-in { from { opacity: 0; transform: rotate(-8deg) scale(0.9) } to { opacity: 1; transform: none } }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+@utility animate-float { animation: float-y 5s ease-in-out infinite; }
+@utility animate-shine { animation: shine 5s ease-in-out infinite 1.5s; }
+@utility animate-fade-up { animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@utility animate-scale-in { animation: scale-in 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@utility animate-slide-right { animation: slide-right 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@utility animate-slide-left { animation: slide-left 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@utility animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+@utility animate-rotate-in { animation: rotate-in 1s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@utility animate-bounce { animation: bounce 2s ease-in-out infinite; }
+
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
