@@ -186,21 +186,54 @@ function Index() {
       {/* PREMIUM LOADER */}
       <Loader />
       
-      {/* HERO - Car Centered with Text Around */}
+      {/* HERO - Centered Layout */}
       <section className="relative min-h-[100svh] overflow-hidden bg-gradient-to-b from-background via-surface/30 to-background">
-        <div className="container-x relative min-h-[100svh] flex flex-col items-center justify-center py-12 gap-4">
+        <div className="container-x relative min-h-[100svh] flex flex-col items-center justify-center py-20 gap-8">
           
-          {/* Center - Car with Hood Text */}
+          {/* Headings */}
+          <div className="relative z-20 text-center w-full">
+            <div className="overflow-hidden mb-2">
+              <motion.h1 
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ 
+                  duration: 1, 
+                  delay: 0.4,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                className="script text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground leading-tight"
+              >
+                Cleaning & Detailing
+              </motion.h1>
+            </div>
+
+            <div className="overflow-hidden">
+              <motion.h1 
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ 
+                  duration: 1, 
+                  delay: 0.6,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                className="script text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground leading-tight"
+              >
+                Services
+              </motion.h1>
+            </div>
+          </div>
+
+          {/* Car */}
           <motion.div 
             style={{ y: carY, opacity: carOpacity }}
-            className="relative z-10 w-full max-w-[90vw] px-4"
+            className="relative z-10 w-full max-w-4xl"
           >
             <motion.div 
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ 
                 duration: 1.2, 
-                delay: 0.4,
+                delay: 0.8,
                 ease: [0.22, 1, 0.36, 1]
               }}
               className="relative pointer-events-auto cursor-crosshair"
@@ -209,12 +242,22 @@ function Index() {
               <motion.div 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.0 }}
+                transition={{ duration: 0.8, delay: 1.2 }}
                 className="absolute top-[15%] left-1/2 -translate-x-1/2 z-20 text-center pointer-events-none"
               >
-                <p className="text-xs md:text-sm font-bold text-foreground/60 tracking-widest uppercase">
-                  Shine Like New
-                </p>
+                <motion.p 
+                  animate={{ 
+                    opacity: [0.6, 1, 0.6],
+                  }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="text-xs md:text-sm font-bold text-primary tracking-widest uppercase"
+                >
+                  Swipe to Clean
+                </motion.p>
               </motion.div>
               
               {/* Glow Effect */}
@@ -247,54 +290,21 @@ function Index() {
             </motion.div>
           </motion.div>
 
-          {/* Bottom Text - Below Car - All Content */}
-          <div className="relative z-20 text-center">
-            {/* Main Headings */}
-            <div className="overflow-hidden mb-1">
-              <motion.h1 
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ 
-                  duration: 1, 
-                  delay: 0.6,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
-                className="script text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground/80 leading-tight"
-              >
-                Cleaning & Detailing
-              </motion.h1>
-            </div>
-
-            <div className="overflow-hidden mb-4">
-              <motion.h1 
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ 
-                  duration: 1, 
-                  delay: 0.8,
-                  ease: [0.22, 1, 0.36, 1]
-                }}
-                className="script text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-foreground/80 leading-tight"
-              >
-                Services
-              </motion.h1>
-            </div>
-
-            {/* Description */}
+          {/* Description & Buttons */}
+          <div className="relative z-20 text-center w-full">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
-              className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-4"
+              transition={{ duration: 0.8, delay: 1.4 }}
+              className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6"
             >
               Automotive • Residential • Commercial Cleaning — Professional services for vehicles, homes, and businesses
             </motion.p>
 
-            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
+              transition={{ duration: 0.8, delay: 1.6 }}
               className="flex flex-wrap items-center justify-center gap-4 mb-6"
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
