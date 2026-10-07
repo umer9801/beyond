@@ -85,13 +85,26 @@ export function CleanBrush({
       } else dab(x, y, size);
       last = { x, y };
     };
+    
+    const onDown = (e: PointerEvent) => {
+      const r = canvas.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      last = { x, y };
+      const size = (brush * r.width) / 1000;
+      ctx.globalCompositeOperation = "destination-out";
+      dab(x, y, size);
+    };
+    
     const onLeave = () => (last = null);
 
     window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerdown", onDown, { passive: true });
     document.addEventListener("pointerleave", onLeave);
     window.addEventListener("resize", paint);
     return () => {
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerdown", onDown);
       document.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("resize", paint);
     };

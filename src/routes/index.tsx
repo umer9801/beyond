@@ -190,18 +190,6 @@ function Index() {
       <section className="relative min-h-[100svh] overflow-hidden bg-gradient-to-b from-background via-surface/30 to-background">
         <div className="container-x relative min-h-[100svh] flex flex-col items-center justify-center py-12 gap-4">
           
-          {/* Top Text - Above Car - Just Quote */}
-          <div className="relative z-20 text-center">
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm font-semibold text-primary uppercase tracking-wider"
-            >
-              Never stop playing in mud
-            </motion.p>
-          </div>
-
           {/* Center - Car with Hood Text */}
           <motion.div 
             style={{ y: carY, opacity: carOpacity }}
@@ -307,7 +295,7 @@ function Index() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.2 }}
-              className="flex flex-wrap items-center justify-center gap-4"
+              className="flex flex-wrap items-center justify-center gap-4 mb-6"
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <QuoteButton className="px-8 py-4 text-base shadow-xl">
@@ -325,63 +313,62 @@ function Index() {
                 </motion.button>
               </Link>
             </motion.div>
-          </div>
 
-          {/* Top Right - Service Stats Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4 }}
-            className="absolute top-32 right-8 z-30"
-          >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="relative overflow-hidden rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-xl"
+            {/* Service Stats Badge - Moved Below Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.4 }}
+              className="inline-block"
             >
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
-              
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-3">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center"
-                  >
-                    <Sparkles className="h-5 w-5 text-primary" />
-                  </motion.div>
-                  <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                      Happy Clients
-                    </p>
-                    <motion.p 
-                      className="text-3xl font-bold text-foreground"
-                      animate={{ scale: [1, 1.05, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="relative overflow-hidden rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-xl"
+              >
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
+                
+                <div className="relative">
+                  <div className="flex items-center gap-3">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                      className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center"
                     >
-                      5000+
-                    </motion.p>
+                      <Sparkles className="h-5 w-5 text-primary" />
+                    </motion.div>
+                    <div>
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                        Happy Clients
+                      </p>
+                      <motion.p 
+                        className="text-3xl font-bold text-foreground"
+                        animate={{ scale: [1, 1.05, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        5000+
+                      </motion.p>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs ml-3">
+                      <motion.div
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                        className="h-2 w-2 rounded-full bg-primary"
+                      />
+                      <span className="text-muted-foreground whitespace-nowrap">Since 2020</span>
+                    </div>
                   </div>
                 </div>
-                
-                <div className="flex items-center gap-2 text-xs">
-                  <motion.div
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="h-2 w-2 rounded-full bg-primary"
-                  />
-                  <span className="text-muted-foreground">Serving GTA since 2020</span>
-                </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Right Side - Social Icons */}
+          {/* Right Side - Social Icons (Hidden on Mobile) */}
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 1.6 }}
-            className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-30"
+            className="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col gap-3 z-30"
           >
             {[Instagram, Twitter, Phone, Mail].map((Icon, i) => (
               <motion.a

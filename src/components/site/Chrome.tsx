@@ -20,7 +20,7 @@ export function Logo() {
   );
 }
 
-export function QuoteButton({ className, children = "Contact" }: { className?: string; children?: React.ReactNode }) {
+export function QuoteButton({ className, children = "Get a Quote" }: { className?: string; children?: React.ReactNode }) {
   return (
     <Link
       to="/get-a-quote"
@@ -38,30 +38,44 @@ export function QuoteButton({ className, children = "Contact" }: { className?: s
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 12);
     f();
     window.addEventListener("scroll", f, { passive: true });
     return () => window.removeEventListener("scroll", f);
   }, []);
+  
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [open]);
+  
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "bg-background/95 backdrop-blur-xl shadow-sm" : "bg-transparent",
+        "fixed inset-x-0 top-0 z-50 transition-all duration-300 bg-background border-b",
+        scrolled ? "shadow-lg border-border" : "border-transparent",
       )}
     >
-      <div className={cn("container-x flex items-center justify-between transition-all", scrolled ? "h-20" : "h-24")}>
+      <div className={cn("container-x flex items-center justify-between transition-all", scrolled ? "h-16" : "h-20")}>
         <Logo />
         
-        {/* Pill Navigation */}
-        <nav className="hidden md:flex items-center gap-2 rounded-full bg-card backdrop-blur-sm px-3 py-2 border border-border shadow-sm">
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-1 rounded-full bg-surface/50 backdrop-blur-sm px-2 py-2 border border-border/50 shadow-sm">
           {NAV.map((n) => (
             <Link
               key={n.to}
               to={n.to}
               activeOptions={{ exact: n.to === "/" }}
-              className="relative px-6 py-2.5 text-sm font-semibold text-foreground/70 rounded-full transition-all hover:text-foreground hover:bg-muted data-[status=active]:text-background data-[status=active]:bg-foreground"
+              className="relative px-5 py-2 text-sm font-semibold text-foreground/70 rounded-full transition-all hover:text-foreground hover:bg-background/80 data-[status=active]:text-primary-foreground data-[status=active]:bg-primary data-[status=active]:shadow-md"
             >
               {n.label}
             </Link>
@@ -69,39 +83,84 @@ export function SiteHeader() {
         </nav>
         
         <div className="hidden md:block"><QuoteButton /></div>
-        <button aria-label="Open menu" className="md:hidden p-2" onClick={() => setOpen(true)}>
+        
+        {/* Mobile Menu Button */}
+        <button 
+          aria-label="Open menu" 
+          className="md:hidden p-2.5 rounded-full hover:bg-surface transition-colors" 
+          onClick={() => setOpen(true)}
+        >
           <Menu className="h-6 w-6" />
         </button>
       </div>
 
-      <div className={cn("fixed inset-0 z-50 md:hidden transition-opacity", open ? "opacity-100" : "pointer-events-none opacity-0")}>
-        <div className="absolute inset-0 bg-foreground/20 backdrop-blur-sm" onClick={() => setOpen(false)} />
-        <div className={cn("absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-background p-6 shadow-lift transition-transform duration-500", open ? "translate-x-0" : "translate-x-full")}>
-          <div className="flex items-center justify-between">
-            <Logo />
-            <button aria-label="Close menu" onClick={() => setOpen(false)} className="p-2"><X className="h-6 w-6" /></button>
-          </div>
-          <nav className="mt-12 flex flex-col">
-            {[...NAV, { to: "/get-a-quote", label: "Get a Quote" } as const].map((n, i) => (
-              <Link
-                key={n.to}
-                to={n.to}
-                onClick={() => setOpen(false)}
-                activeOptions={{ exact: n.to === "/" }}
-                className="flex items-center justify-between border-b border-border py-5 text-2xl font-bold tracking-tight data-[status=active]:text-primary"
-                style={{ transitionDelay: `${i * 40}ms` }}
+      {/* Mobile Menu */}
+      {open && (
+        <div className="fixed inset-0 z-[100] md:hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300" 
+            onClick={() => setOpen(false)} 
+          />
+          
+          {/* Menu Panel */}
+          <div className="absolute right-0 top-0 h-full w-[85%] max-w-sm bg-background shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-border bg-surface/30">
+              <Logo />
+              <button 
+                aria-label="Close menu" 
+                onClick={() => setOpen(false)} 
+                className="p-2 rounded-full hover:bg-background transition-colors"
               >
-                {n.label}
-                <ArrowUpRight className="h-5 w-5 text-muted-foreground" />
-              </Link>
-            ))}
-          </nav>
-          <div className="mt-auto text-sm text-muted-foreground">
-            <p>{BRAND.phone}</p>
-            <p>{BRAND.email}</p>
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            
+            {/* Navigation Links */}
+            <div className="flex-1 overflow-y-auto p-6">
+              <nav className="space-y-2">
+                {NAV.map((n) => (
+                  <Link
+                    key={n.to}
+                    to={n.to}
+                    onClick={() => setOpen(false)}
+                    activeOptions={{ exact: n.to === "/" }}
+                    className="flex items-center justify-between px-5 py-4 rounded-xl text-lg font-bold transition-all hover:bg-surface data-[status=active]:bg-primary data-[status=active]:text-primary-foreground group"
+                  >
+                    <span>{n.label}</span>
+                    <ArrowUpRight className="h-5 w-5 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                ))}
+              </nav>
+              
+              {/* CTA Button */}
+              <div className="mt-8">
+                <Link
+                  to="/get-a-quote"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full px-6 py-4 rounded-full bg-foreground text-background font-bold shadow-xl"
+                >
+                  Get a Quote
+                  <ArrowUpRight className="h-5 w-5" />
+                </Link>
+              </div>
+            </div>
+            
+            {/* Footer Contact */}
+            <div className="p-6 border-t border-border bg-surface/50">
+              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
+                Contact
+              </p>
+              <div className="space-y-2">
+                <p className="text-sm font-bold text-foreground">{BRAND.phone}</p>
+                <p className="text-sm text-muted-foreground">{BRAND.email}</p>
+                <p className="text-xs text-muted-foreground mt-3">{BRAND.area}</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }
