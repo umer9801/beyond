@@ -43,12 +43,22 @@ const BUSINESS_SERVICES = [
 function ServiceCard({ service, index }: { service: typeof AUTO_SERVICES[0]; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.6 }}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      initial={{ 
+        opacity: 0, 
+        x: index % 2 === 0 ? -100 : 100,
+        y: 50,
+        rotateY: index % 2 === 0 ? -20 : 20
+      }}
+      whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ 
+        delay: (index % 3) * 0.15, 
+        duration: 0.85,
+        ease: [0.22, 1, 0.36, 1]
+      }}
+      whileHover={{ y: -12, scale: 1.03, transition: { duration: 0.3 } }}
       className="group relative"
+      style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
     >
       <motion.div className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 h-full">
         {/* Animated background gradient */}

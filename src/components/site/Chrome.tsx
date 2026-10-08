@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { Menu, X, Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
 import { BRAND } from "./brand";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -166,48 +167,168 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
-  return (
-    <footer className="bg-surface border-t border-border">
-      <div className="h-0.5 w-24 bg-primary" />
-      <div className="container-x grid gap-12 py-20 md:grid-cols-12">
-        <div className="md:col-span-5">
-          <Logo />
-          <p className="mt-5 max-w-sm text-muted-foreground leading-relaxed">
-            Professional cleaning and property care for vehicles, homes and businesses. Detail-led, reliable, done properly.
-          </p>
-          <QuoteButton className="mt-8" />
-        </div>
-        <FooterCol title="Navigate" items={[["/", "Home"], ["/about", "About"], ["/services", "Services"], ["/contact", "Contact"], ["/get-a-quote", "Get a Quote"]]} />
-        <FooterCol title="Services" items={[["/services/auto", "Auto"], ["/services/home", "Home"], ["/services/business", "Business"]]} />
-        <div className="md:col-span-3">
-          <p className="eyebrow">Contact</p>
-          <ul className="mt-5 space-y-3 text-sm">
-            <li>{BRAND.phone}</li>
-            <li>{BRAND.email}</li>
-            <li className="text-muted-foreground">{BRAND.area}</li>
-          </ul>
-        </div>
-      </div>
-      <div className="container-x flex flex-col gap-3 border-t border-border py-6 text-xs text-muted-foreground md:flex-row md:justify-between">
-        <p>© {new Date().getFullYear()} {BRAND.full}. All rights reserved.</p>
-        <div className="flex gap-6"><span>Privacy Policy</span><span>Terms & Conditions</span></div>
-      </div>
-    </footer>
-  );
-}
+  const year = new Date().getFullYear();
 
-function FooterCol({ title, items }: { title: string; items: [string, string][] }) {
   return (
-    <div className="md:col-span-2">
-      <p className="eyebrow">{title}</p>
-      <ul className="mt-5 space-y-3 text-sm">
-        {items.map(([to, l]) => (
-          <li key={to}>
-            <Link to={to as "/"} className="transition-colors hover:text-primary">{l}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <footer className="relative overflow-hidden">
+      {/* Wavy curve separator - diagonal from top-left to bottom-right */}
+      <div className="absolute inset-0" 
+        style={{
+          background: 'linear-gradient(135deg, rgba(168,205,184,0.25) 0%, rgba(111,155,130,0.25) 100%)',
+          clipPath: 'polygon(0 0, 100% 15%, 100% 100%, 0 100%)'
+        }}
+      />
+      
+      <div className="relative" 
+        style={{
+          background: 'linear-gradient(135deg, rgba(168,205,184,0.2) 0%, rgba(111,155,130,0.2) 100%)',
+          clipPath: 'polygon(0 0, 100% 12%, 100% 100%, 0 100%)'
+        }}
+      >
+
+      {/* Subtle sage gradient overlay */}
+      <div className="absolute inset-0 pointer-events-none opacity-40"
+        style={{
+          backgroundImage: `radial-gradient(circle at 20% 80%, rgba(111,155,130,0.25) 0%, transparent 50%),
+                            radial-gradient(circle at 80% 20%, rgba(168,205,184,0.25) 0%, transparent 50%)`
+        }}
+      />
+
+      {/* Links grid */}
+      <div className="relative container-x py-16 pt-24 md:pt-32">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+          {/* Pages */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-foreground text-xs font-bold uppercase tracking-[0.2em] mb-5">
+              Pages
+            </h3>
+            <ul className="space-y-3">
+              {[["/" , "Home"], ["/about", "About"], ["/services", "Services"], ["/contact", "Contact"], ["/get-a-quote", "Get a Quote"]].map(([to, label]) => (
+                <li key={to}>
+                  <Link 
+                    to={to as "/"} 
+                    className="text-muted-foreground text-sm hover:text-primary transition-colors duration-200"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Services */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h3 className="text-foreground text-xs font-bold uppercase tracking-[0.2em] mb-5">
+              Services
+            </h3>
+            <ul className="space-y-3">
+              {[["Auto Detailing", "/services/auto"], ["Home Cleaning", "/services/home"], ["Commercial", "/services/business"]].map(([label, to]) => (
+                <li key={to}>
+                  <Link 
+                    to={to as "/"} 
+                    className="text-muted-foreground text-sm hover:text-primary transition-colors duration-200"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Contact */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h3 className="text-foreground text-xs font-bold uppercase tracking-[0.2em] mb-5">
+              Contact
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <a 
+                  href={`tel:${BRAND.phone}`} 
+                  className="text-muted-foreground text-sm hover:text-primary transition-colors duration-200"
+                >
+                  {BRAND.phone}
+                </a>
+              </li>
+              <li>
+                <a 
+                  href={`mailto:${BRAND.email}`} 
+                  className="text-muted-foreground text-sm hover:text-primary transition-colors duration-200"
+                >
+                  {BRAND.email}
+                </a>
+              </li>
+              <li className="text-muted-foreground/70 text-sm">{BRAND.area}</li>
+            </ul>
+          </motion.div>
+
+          {/* Follow Us */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h3 className="text-foreground text-xs font-bold uppercase tracking-[0.2em] mb-5">
+              Follow Us
+            </h3>
+            <div className="flex gap-3">
+              {[
+                { label: "Instagram", href: "#" },
+                { label: "Facebook", href: "#" },
+                { label: "Twitter", href: "#" },
+              ].map(({ label, href }) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-card border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-200"
+                  aria-label={label}
+                >
+                  <span className="text-xs font-bold">
+                    {label[0]}
+                  </span>
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="relative border-t border-border bg-card/50">
+        <div className="container-x py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <p>© {year} {BRAND.full}. All rights reserved.</p>
+          <div className="flex items-center gap-5">
+            <button className="hover:text-foreground cursor-pointer transition-colors">
+              Privacy Policy
+            </button>
+            <span className="h-4 w-px bg-border" />
+            <button className="hover:text-foreground cursor-pointer transition-colors">
+              Terms & Conditions
+            </button>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+    </footer>
   );
 }
 

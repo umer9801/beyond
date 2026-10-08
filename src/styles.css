@@ -42,30 +42,30 @@
 
 :root {
   --radius: 0.875rem;
-  --background: #FCFDF9;                 /* Light cream/white */
-  --surface: #DDF4EA;                    /* Light mint sections */
-  --foreground: #17352E;                 /* Dark green headings */
+  --background: #F7F7F2;                 /* Warm ivory */
+  --surface: #EEF2EC;                    /* Very light sage sections */
+  --foreground: #171A18;                 /* Near black - main text */
   --card: #FFFFFF;
-  --card-foreground: #17352E;
+  --card-foreground: #171A18;
   --popover: #FFFFFF;
-  --popover-foreground: #17352E;
-  --primary: #63C7A5;                    /* Mint green primary */
+  --popover-foreground: #171A18;
+  --primary: #6F9B82;                    /* Deep sage - buttons/strong accent */
   --primary-foreground: #FFFFFF;
-  --primary-deep: #4EAF8F;               /* Button hover */
-  --primary-soft: #DDF4EA;               /* Light sections */
-  --secondary: #DDF4EA;                  /* Light mint */
-  --secondary-foreground: #17352E;
-  --muted: #DDF4EA;
-  --muted-foreground: #526660;           /* Body text gray-green */
-  --accent: #F4C95D;                     /* Yellow accent */
-  --accent-foreground: #17352E;
+  --primary-deep: #5A7F6B;               /* Darker sage for hover */
+  --primary-soft: #A8CDB8;               /* Muted mint - highlights */
+  --secondary: #EEF2EC;                  /* Light sage */
+  --secondary-foreground: #171A18;
+  --muted: #EEF2EC;
+  --muted-foreground: #68706B;           /* Muted gray - secondary text */
+  --accent: #A8CDB8;                     /* Muted mint accent */
+  --accent-foreground: #171A18;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
-  --border: #C8E6D7;                     /* Light mint border */
-  --input: #C8E6D7;
-  --ring: #63C7A5;
-  --shadow-soft: 0 1px 2px rgba(23, 53, 46, 0.04), 0 8px 24px -12px rgba(23, 53, 46, 0.12);
-  --shadow-lift: 0 2px 4px rgba(23, 53, 46, 0.04), 0 30px 60px -30px rgba(23, 53, 46, 0.28);
+  --border: #DDE4DE;                     /* Subtle borders */
+  --input: #DDE4DE;
+  --ring: #6F9B82;
+  --shadow-soft: 0 1px 2px rgba(23, 26, 24, 0.04), 0 8px 24px -12px rgba(23, 26, 24, 0.12);
+  --shadow-lift: 0 2px 4px rgba(23, 26, 24, 0.04), 0 30px 60px -30px rgba(23, 26, 24, 0.28);
 }
 
 @layer base {
@@ -90,7 +90,7 @@
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #63C7A5;
+  color: #6F9B82;
 }
 
 @utility display {

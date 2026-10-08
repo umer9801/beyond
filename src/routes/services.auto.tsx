@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import clean from "@/assets/car-clean.png.asset.json";
-import dirty from "@/assets/car-dirty.png.asset.json";
 import auto from "@/assets/auto.jpg";
 import about from "@/assets/about.jpg";
 import { ServiceDetail } from "@/components/site/ServiceDetail";

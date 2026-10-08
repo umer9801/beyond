@@ -108,12 +108,22 @@ function About() {
           {STATS.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
-              whileHover={{ y: -8 }}
+              initial={{ 
+                opacity: 0, 
+                x: i % 2 === 0 ? -100 : 100,
+                y: 40,
+                rotateY: i % 2 === 0 ? -20 : 20
+              }}
+              whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                delay: (i % 4) * 0.12, 
+                duration: 0.85,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              whileHover={{ y: -10, scale: 1.04 }}
               className="relative group"
+              style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
             >
               <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 text-center h-full">
                 <motion.div
@@ -150,12 +160,22 @@ function About() {
             {SERVICES_OVERVIEW.map((service, i) => (
               <motion.div
                 key={service.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15, duration: 0.6 }}
-                whileHover={{ y: -8 }}
+                initial={{ 
+                  opacity: 0, 
+                  x: i === 0 ? -120 : i === 1 ? 0 : 120,
+                  y: i === 1 ? 80 : 40,
+                  rotateY: i === 0 ? -25 : i === 1 ? 0 : 25
+                }}
+                whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  delay: i * 0.18, 
+                  duration: 0.9,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                whileHover={{ y: -12, scale: 1.03 }}
                 className="group"
+                style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
               >
                 <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 h-full">
                   <motion.div
@@ -198,12 +218,22 @@ function About() {
           {WHY_CHOOSE.map((item, i) => (
             <motion.div
               key={item.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
-              whileHover={{ y: -8 }}
+              initial={{ 
+                opacity: 0, 
+                x: i % 2 === 0 ? -100 : 100,
+                y: 50,
+                rotateY: i % 2 === 0 ? -25 : 25
+              }}
+              whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                delay: (i % 3) * 0.15, 
+                duration: 0.85,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              whileHover={{ y: -12, scale: 1.04 }}
               className="group"
+              style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
             >
               <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-8 h-full">
                 <motion.div

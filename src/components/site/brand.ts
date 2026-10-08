@@ -2,8 +2,8 @@
 export const BRAND = {
   name: "Beyond1",
   full: "Beyond1 - Beyond Expectations",
-  phone: "647 646 8756",
-  email: "sarpreet7171sandhu@gmail.com",
+  phone: "000 000 0000",
+  email: "info@beyond1.com",
   area: "Greater Toronto Area",
   hours: "Mon – Sat, 8:00 – 18:00",
 };

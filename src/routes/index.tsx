@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Sparkles, Shield, Clock, Star, CheckCircle2, Calendar, Phone, MessageSquare, Droplets, Zap, Award, ChevronDown, Users, Instagram, Twitter, Mail } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import home from "@/assets/home.jpg";
 import cleanCarImg from "@/assets/clean.png";
@@ -119,11 +119,50 @@ const FAQ_ITEMS = [
 
 // Framer Motion Variants
 const fadeInUp = {
-  hidden: { opacity: 0, y: 60 },
+  hidden: { opacity: 0, y: 80 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
+    transition: { 
+      duration: 0.8, 
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+const fadeInScale = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    transition: { 
+      duration: 0.8, 
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+const slideInLeft = {
+  hidden: { opacity: 0, x: -100 },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: { 
+      duration: 0.9, 
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+const slideInRight = {
+  hidden: { opacity: 0, x: 100 },
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: { 
+      duration: 0.9, 
+      ease: [0.22, 1, 0.36, 1]
+    }
   }
 };
 
@@ -132,8 +171,20 @@ const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3
+      staggerChildren: 0.15,
+      delayChildren: 0.1
+    }
+  }
+};
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1]
     }
   }
 };
@@ -186,9 +237,190 @@ function Index() {
       {/* PREMIUM LOADER */}
       <Loader />
       
-      {/* HERO - Centered Layout */}
-      <section className="relative min-h-[100svh] overflow-hidden bg-gradient-to-b from-background via-surface/30 to-background">
-        <div className="container-x relative min-h-[100svh] flex flex-col items-center justify-center py-20 gap-8">
+      {/* HERO - Luxury Automotive Feel */}
+      <section className="relative min-h-[100svh] overflow-hidden bg-gradient-to-b from-background via-surface/50 to-background">
+        {/* Premium Background Animations */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          
+          {/* Diagonal Animated Lines - Dark Grey */}
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={`diagonal-${i}`}
+              className="absolute h-0.5 bg-gradient-to-r from-transparent via-foreground/30 to-transparent"
+              style={{
+                width: '150%',
+                top: `${i * 10}%`,
+                left: '-25%',
+                transform: 'rotate(-20deg)',
+              }}
+              animate={{
+                x: ['-10%', '10%'],
+                opacity: [0.2, 0.5, 0.2],
+              }}
+              transition={{
+                duration: 20 + i * 2,
+                repeat: Infinity,
+                delay: i * 0.5,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+
+          {/* Vertical Scanning Lines */}
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={`vertical-${i}`}
+              className="absolute w-0.5 h-full bg-gradient-to-b from-transparent via-foreground/25 to-transparent"
+              style={{
+                left: `${15 + i * 15}%`,
+              }}
+              animate={{
+                opacity: [0.25, 0.5, 0.25],
+                scaleY: [0.8, 1, 0.8],
+              }}
+              transition={{
+                duration: 8 + i,
+                repeat: Infinity,
+                delay: i * 0.8,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+
+          {/* Grid Pattern - Subtle */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, rgba(23, 26, 24, 0.12) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(23, 26, 24, 0.12) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px',
+            }}
+            animate={{
+              opacity: [0.6, 0.9, 0.6],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+          {/* Large Sweeping Lines */}
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={`sweep-${i}`}
+              className="absolute h-1 bg-gradient-to-r from-transparent via-foreground/35 to-transparent"
+              style={{
+                width: '120%',
+                left: '-10%',
+                top: `${25 + i * 25}%`,
+              }}
+              animate={{
+                x: ['-20%', '20%'],
+                opacity: [0, 0.6, 0],
+              }}
+              transition={{
+                duration: 18 + i * 4,
+                repeat: Infinity,
+                delay: i * 3,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+
+          {/* Floating Rectangles - Dark */}
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={`rect-${i}`}
+              className="absolute border-2 border-foreground/25 bg-foreground/5"
+              style={{
+                width: `${120 + i * 40}px`,
+                height: `${80 + i * 30}px`,
+                left: `${10 + i * 22}%`,
+                top: `${15 + i * 18}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                x: [0, 15, 0],
+                rotate: [0, 5, 0],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: 15 + i * 3,
+                repeat: Infinity,
+                delay: i * 1.5,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+
+          {/* Radial Pulse Circles */}
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={`pulse-${i}`}
+              className="absolute rounded-full border-2 border-foreground/30"
+              style={{
+                width: `${200 + i * 150}px`,
+                height: `${200 + i * 150}px`,
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 0.1, 0.3],
+              }}
+              transition={{
+                duration: 12 + i * 4,
+                repeat: Infinity,
+                delay: i * 2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+
+          {/* Dot Matrix Pattern */}
+          <div className="absolute inset-0 opacity-80">
+            {[...Array(25)].map((_, i) => (
+              <motion.div
+                key={`dot-${i}`}
+                className="absolute w-2 h-2 rounded-full bg-foreground/30"
+                style={{
+                  left: `${(i % 5) * 20 + 10}%`,
+                  top: `${Math.floor(i / 5) * 20 + 10}%`,
+                }}
+                animate={{
+                  scale: [1, 2, 1],
+                  opacity: [0.3, 0.7, 0.3],
+                }}
+                transition={{
+                  duration: 4 + (i % 3),
+                  repeat: Infinity,
+                  delay: i * 0.2,
+                  ease: "easeInOut"
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Gradient Overlay for Depth */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-foreground/12 via-transparent to-foreground/12"
+            animate={{
+              opacity: [0.5, 0.8, 0.5],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+        </div>
+
+        <div className="container-x relative min-h-[100svh] flex flex-col items-center justify-center py-20 gap-8 z-10">
           
           {/* Headings */}
           <div className="relative z-20 text-center w-full">
@@ -226,7 +458,7 @@ function Index() {
           {/* Car */}
           <motion.div 
             style={{ y: carY, opacity: carOpacity }}
-            className="relative z-10 w-full max-w-4xl"
+            className="relative z-10 w-full max-w-6xl px-4"
           >
             <motion.div 
               initial={{ opacity: 0, scale: 0.85 }}
@@ -247,7 +479,7 @@ function Index() {
               >
                 <motion.p 
                   animate={{ 
-                    opacity: [0.6, 1, 0.6],
+                    opacity: [0.5, 0.8, 0.5],
                   }}
                   transition={{ 
                     duration: 2, 
@@ -308,17 +540,17 @@ function Index() {
               className="flex flex-wrap items-center justify-center gap-4 mb-6"
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <QuoteButton className="px-8 py-4 text-base shadow-xl">
-                  Get Free Quote
+                <QuoteButton className="px-8 py-4 text-base shadow-xl bg-primary hover:bg-primary-deep">
+                  Book a Cleaning
                 </QuoteButton>
               </motion.div>
               
               <Link to="/services">
                 <motion.button
                   whileHover={{ x: 4 }}
-                  className="group inline-flex items-center gap-2 px-8 py-4 text-base font-semibold text-foreground rounded-full border-2 border-border hover:border-foreground transition-all"
+                  className="group inline-flex items-center gap-2 px-8 py-4 text-base font-semibold text-foreground rounded-full border-2 border-foreground/20 hover:border-foreground bg-background/50 backdrop-blur-sm transition-all"
                 >
-                  View All Services
+                  View Services
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </motion.button>
               </Link>
@@ -328,22 +560,22 @@ function Index() {
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.4 }}
+              transition={{ duration: 0.8, delay: 1.8 }}
               className="inline-block"
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                className="relative overflow-hidden rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-xl"
+                className="relative overflow-hidden rounded-2xl border border-border bg-card backdrop-blur-sm p-6 shadow-lg"
               >
                 {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-transparent" />
                 
                 <div className="relative">
                   <div className="flex items-center gap-3">
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                      className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center"
+                      className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center"
                     >
                       <Sparkles className="h-5 w-5 text-primary" />
                     </motion.div>
@@ -477,35 +709,63 @@ function Index() {
 
       {/* SERVICES OVERVIEW */}
       <section className="container-x py-28 md:py-40">
-        <Reveal className="grid gap-10 md:grid-cols-12">
-          <div className="md:col-span-8">
-            <p className="eyebrow">What we do</p>
-            <h2 className="display mt-6 text-4xl md:text-6xl lg:text-7xl">One company.<br />Three ways to keep<br />your world clean.</h2>
-          </div>
-          <p className="md:col-span-4 self-end text-muted-foreground leading-relaxed">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="grid gap-10 md:grid-cols-12"
+        >
+          <motion.div variants={staggerItem} className="md:col-span-8">
+            <motion.p 
+              variants={staggerItem}
+              className="eyebrow"
+            >
+              What we do
+            </motion.p>
+            <motion.h2 
+              variants={staggerItem}
+              className="display mt-6 text-4xl md:text-6xl lg:text-7xl"
+            >
+              One company.<br />Three ways to keep<br />your world clean.
+            </motion.h2>
+          </motion.div>
+          <motion.p 
+            variants={staggerItem}
+            className="md:col-span-4 self-end text-muted-foreground leading-relaxed"
+          >
             From a mud-caked car to an office floor at closing time — one team, one standard, applied to everything we touch.
-          </p>
-        </Reveal>
+          </motion.p>
+        </motion.div>
 
         <div className="mt-20 grid gap-6 md:grid-cols-3">
           {CATEGORIES.map((c, i) => (
             <motion.div
               key={c.key}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.6 }}
+              initial={{ 
+                opacity: 0, 
+                x: i === 0 ? -120 : i === 1 ? 0 : 120,
+                y: i === 1 ? 80 : 40,
+                rotateY: i === 0 ? -20 : i === 1 ? 0 : 20
+              }}
+              whileInView={{ opacity: 1, x: 0, y: 0, rotateY: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                delay: i * 0.18, 
+                duration: 0.9,
+                ease: [0.22, 1, 0.36, 1]
+              }}
               className={i === 1 ? "md:mt-16" : ""}
             >
               <Link to={c.to} className="group block">
                 <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative aspect-[3/4] overflow-hidden rounded-3xl"
+                  whileHover={{ scale: 1.03, y: -10 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative aspect-[3/4] overflow-hidden rounded-3xl shadow-xl"
                 >
                   <motion.img 
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 1.2 }}
+                    whileHover={{ scale: 1.15 }}
+                    transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
                     src={c.img} 
                     alt={`${c.key} cleaning`} 
                     loading="lazy" 
@@ -513,38 +773,43 @@ function Index() {
                     height={960} 
                     className="h-full w-full object-cover" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+                  <motion.div 
+                    initial={{ opacity: 0.6 }}
+                    whileHover={{ opacity: 0.8 }}
+                    transition={{ duration: 0.4 }}
+                    className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" 
+                  />
                   <div className="absolute inset-x-6 bottom-6 text-background">
                     <motion.span 
                       initial={{ width: 0 }}
-                      whileInView={{ width: 48 }}
+                      whileInView={{ width: "60px" }}
                       viewport={{ once: true }}
-                      transition={{ delay: i * 0.15 + 0.5, duration: 0.6 }}
-                      className="block h-0.5 bg-primary"
+                      transition={{ delay: i * 0.2 + 0.5, duration: 0.6 }}
+                      className="block h-1 bg-background/80 mb-4 rounded-full"
                     />
-                    <motion.div 
-                      className="mt-4 flex items-end justify-between"
-                      whileHover={{ y: -4 }}
+                    <motion.h3 
+                      className="text-3xl font-bold mb-2"
+                      whileHover={{ x: 10 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <h3 className="display text-4xl">{c.key}</h3>
-                      <motion.span 
-                        whileHover={{ rotate: 45, backgroundColor: "var(--color-primary)" }}
-                        transition={{ duration: 0.3 }}
-                        className="flex h-11 w-11 items-center justify-center rounded-full bg-background text-foreground"
-                      >
-                        <ArrowUpRight className="h-5 w-5" />
-                      </motion.span>
-                    </motion.div>
+                      {c.label}
+                    </motion.h3>
                     <motion.p 
-                      initial={{ maxHeight: 0, opacity: 0 }}
-                      whileHover={{ maxHeight: 80, opacity: 0.9 }}
-                      transition={{ duration: 0.5 }}
-                      className="mt-2 overflow-hidden text-sm"
+                      className="text-sm text-background/80"
+                      whileHover={{ x: 10 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
                     >
                       {c.desc}
                     </motion.p>
                   </div>
+                  <motion.div 
+                    initial={{ opacity: 0, x: -20 }}
+                    whileHover={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute top-6 right-6 h-12 w-12 rounded-full bg-background/20 backdrop-blur-sm flex items-center justify-center"
+                  >
+                    <ArrowUpRight className="h-5 w-5 text-background" />
+                  </motion.div>
                 </motion.div>
               </Link>
             </motion.div>
@@ -555,61 +820,164 @@ function Index() {
       {/* SECOND BEFORE/AFTER */}
       <section className="bg-surface py-28 md:py-36">
         <div className="container-x grid items-center gap-12 md:grid-cols-12">
-          <Reveal className="md:col-span-4">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInLeft}
+            className="md:col-span-4"
+          >
             <p className="eyebrow">Home exterior</p>
             <h2 className="display mt-6 text-4xl md:text-5xl">Years of grime.<br />One afternoon.</h2>
             <p className="mt-6 text-muted-foreground leading-relaxed">Power washing that lifts built-up dirt from driveways, garages and pathways — drag to see the difference.</p>
             <Link to="/services/home" className="group mt-8 inline-flex items-center gap-2 font-semibold text-primary">
               Home services <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
-          </Reveal>
-          <Reveal className="md:col-span-8" variant="clip-reveal">
-            <BeforeAfter beforeSrc={home} alt="Driveway" initial={45} className="aspect-[16/10] rounded-3xl" width={1280} height={960} />
-          </Reveal>
+          </motion.div>
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInRight}
+            className="md:col-span-8"
+          >
+            <BeforeAfter beforeSrc={home} alt="Driveway" initial={45} className="aspect-[16/10] rounded-3xl shadow-2xl" width={1280} height={960} />
+          </motion.div>
         </div>
       </section>
 
       {/* FEATURES CARDS */}
       <section className="container-x py-28 md:py-40">
-        <Reveal className="text-center max-w-3xl mx-auto">
-          <p className="eyebrow">Why choose us</p>
-          <h2 className="display mt-6 text-4xl md:text-6xl">Built on trust.<br />Backed by results.</h2>
-          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="text-center max-w-3xl mx-auto"
+        >
+          <motion.p variants={staggerItem} className="eyebrow">Why choose us</motion.p>
+          <motion.h2 variants={staggerItem} className="display mt-6 text-4xl md:text-6xl">Built on trust.<br />Backed by results.</motion.h2>
+          <motion.p variants={staggerItem} className="mt-6 text-lg text-muted-foreground leading-relaxed">
             We don't just clean — we build relationships through consistent quality and reliable service.
-          </p>
-        </Reveal>
+          </motion.p>
+        </motion.div>
 
         <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((feature, i) => (
-            <Reveal key={feature.title} delay={i * 100}>
+            <motion.div 
+              key={feature.title}
+              initial={{ 
+                opacity: 0, 
+                x: i % 2 === 0 ? -100 : 100,
+                y: 50,
+                rotateY: i % 2 === 0 ? -20 : 20
+              }}
+              whileInView={{ 
+                opacity: 1, 
+                x: 0,
+                y: 0,
+                rotateY: 0
+              }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                delay: (i % 4) * 0.12, 
+                duration: 0.8,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              whileHover={{ 
+                y: -15, 
+                scale: 1.05,
+                rotateY: 5,
+                z: 50,
+                transition: { 
+                  duration: 0.4,
+                  ease: [0.22, 1, 0.36, 1]
+                } 
+              }}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-lg hover:shadow-2xl transition-shadow duration-500"
+              style={{
+                transformStyle: "preserve-3d",
+                perspective: "1000px"
+              }}
+            >
+              {/* Animated Background Gradient */}
               <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8"
-              >
+                initial={{ opacity: 0, scale: 0 }}
+                whileHover={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0 bg-gradient-to-br from-primary/10 via-accent/5 to-transparent"
+              />
+              
+              {/* Glow Effects */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  animate={{ 
+                    x: [0, 20, 0],
+                    y: [0, -20, 0],
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute top-0 right-0 h-32 w-32 bg-primary/20 rounded-full blur-3xl" 
                 />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute top-0 right-0 h-20 w-20 bg-primary/10 rounded-full blur-2xl" />
-                  <div className="absolute bottom-0 left-0 h-20 w-20 bg-primary/10 rounded-full blur-2xl" />
-                </div>
-                <div className="relative">
-                  <motion.div 
-                    whileHover={{ scale: 1.1, rotate: 6 }}
-                    transition={{ duration: 0.3 }}
-                    className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300"
-                  >
-                    <feature.icon className="h-7 w-7" />
-                  </motion.div>
-                  <h3 className="mt-6 text-xl font-bold transition-colors group-hover:text-primary">{feature.title}</h3>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
-                </div>
-              </motion.div>
-            </Reveal>
+                <motion.div 
+                  animate={{ 
+                    x: [0, -20, 0],
+                    y: [0, 20, 0],
+                  }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute bottom-0 left-0 h-32 w-32 bg-accent/20 rounded-full blur-3xl" 
+                />
+              </div>
+
+              <div className="relative" style={{ transform: "translateZ(30px)" }}>
+                {/* Icon with Animation */}
+                <motion.div 
+                  whileHover={{ 
+                    scale: 1.15, 
+                    rotate: [0, -10, 10, -10, 0],
+                    transition: { duration: 0.5 }
+                  }}
+                  className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6"
+                >
+                  <feature.icon className="h-7 w-7" />
+                </motion.div>
+
+                <motion.h3 
+                  className="text-xl font-bold mb-3"
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {feature.title}
+                </motion.h3>
+                
+                <motion.p 
+                  initial={{ opacity: 0.7 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-sm text-muted-foreground leading-relaxed"
+                >
+                  {feature.desc}
+                </motion.p>
+
+                {/* Hover Arrow Indicator */}
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  whileHover={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="mt-4 flex items-center gap-2 text-primary text-sm font-semibold"
+                >
+                  Learn more
+                  <ArrowRight className="h-4 w-4" />
+                </motion.div>
+              </div>
+
+              {/* Shine Effect on Hover */}
+              <motion.div
+                initial={{ x: "-100%", opacity: 0 }}
+                whileHover={{ x: "200%", opacity: [0, 0.5, 0] }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+              />
+            </motion.div>
           ))}
         </div>
       </section>
@@ -642,27 +1010,57 @@ function Index() {
             {STATS.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
+                initial={{ 
+                  opacity: 0, 
+                  x: i % 2 === 0 ? -80 : 80,
+                  y: 50,
+                  rotateY: i % 2 === 0 ? -25 : 25
+                }}
+                whileInView={{ 
+                  opacity: 1, 
+                  x: 0,
+                  y: 0,
+                  rotateY: 0
+                }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  delay: (i % 4) * 0.12, 
+                  duration: 0.9,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                whileHover={{
+                  scale: 1.1,
+                  y: -10,
+                  rotateY: i % 2 === 0 ? 5 : -5,
+                  transition: { duration: 0.3 }
+                }}
                 className="text-center"
+                style={{
+                  transformStyle: "preserve-3d",
+                  perspective: "1000px"
+                }}
               >
                 <motion.div
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 + 0.3, type: "spring", stiffness: 200 }}
+                  transition={{ 
+                    delay: i * 0.12 + 0.3, 
+                    type: "spring", 
+                    stiffness: 200,
+                    damping: 10
+                  }}
                   className="display text-5xl md:text-6xl text-primary"
+                  style={{ transform: "translateZ(20px)" }}
                 >
                   <motion.span
-                    whileInView={{
+                    animate={{
                       backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                     }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                     style={{
                       backgroundSize: "200% 200%",
-                      backgroundImage: "linear-gradient(90deg, currentColor 0%, #ff6b6b 50%, currentColor 100%)"
+                      backgroundImage: "linear-gradient(90deg, currentColor 0%, #A8CDB8 50%, currentColor 100%)"
                     }}
                     className="inline-block bg-clip-text"
                   >
@@ -670,10 +1068,10 @@ function Index() {
                   </motion.span>
                 </motion.div>
                 <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 + 0.5 }}
+                  transition={{ delay: i * 0.12 + 0.5 }}
                   className="mt-3 text-sm font-semibold tracking-wide text-background/80 uppercase"
                 >
                   {stat.label}
@@ -686,63 +1084,131 @@ function Index() {
 
       {/* PROCESS SECTION */}
       <section className="container-x py-28 md:py-40">
-        <Reveal className="text-center max-w-3xl mx-auto mb-20">
-          <p className="eyebrow">How it works</p>
-          <h2 className="display mt-6 text-4xl md:text-6xl">Simple process.<br />Powerful results.</h2>
-          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          <motion.p variants={staggerItem} className="eyebrow">How it works</motion.p>
+          <motion.h2 variants={staggerItem} className="display mt-6 text-4xl md:text-6xl">Simple process.<br />Powerful results.</motion.h2>
+          <motion.p variants={staggerItem} className="mt-6 text-lg text-muted-foreground leading-relaxed">
             From first contact to final walkthrough — we've streamlined every step to make professional cleaning effortless.
-          </p>
-        </Reveal>
+          </motion.p>
+        </motion.div>
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {PROCESS_STEPS.map((step, i) => (
             <motion.div
               key={step.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.6 }}
-              whileHover={{ y: -8 }}
-              className="relative"
+              initial={{ 
+                opacity: 0,
+                x: i % 2 === 0 ? -100 : 100,
+                y: 60,
+                rotateY: i % 2 === 0 ? -30 : 30,
+              }}
+              whileInView={{ 
+                opacity: 1,
+                x: 0,
+                y: 0,
+                rotateY: 0,
+              }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{
+                delay: (i % 4) * 0.15,
+                duration: 0.9,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              whileHover={{
+                scale: 1.05,
+                y: -12,
+                rotateY: i % 2 === 0 ? 8 : -8,
+                transition: { duration: 0.4 }
+              }}
+              className="relative group"
+              style={{
+                transformStyle: "preserve-3d",
+                perspective: "1200px"
+              }}
             >
-              {/* Connecting Line (desktop only) */}
-              {i < PROCESS_STEPS.length - 1 && (
-                <motion.div 
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
+              <motion.div className="relative overflow-hidden rounded-2xl border-2 border-border bg-card p-8 shadow-lg hover:shadow-2xl transition-shadow duration-500">
+                {/* Animated Step Number */}
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  whileInView={{ scale: 1, rotate: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 + 0.5, duration: 0.8 }}
-                  className="hidden lg:block absolute top-12 left-[60%] w-full h-0.5 bg-gradient-to-r from-primary/30 to-transparent origin-left"
-                />
-              )}
-              
-              <motion.div 
-                whileHover={{ scale: 1.02 }}
-                className="relative rounded-2xl border border-border bg-card p-8 hover:shadow-xl hover:border-primary/30 transition-all"
-              >
-                {/* Step Number Badge */}
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15 + 0.3, type: "spring", stiffness: 200 }}
-                  className="absolute -top-4 left-8 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-lg"
+                  transition={{
+                    delay: i * 0.15 + 0.3,
+                    duration: 0.6,
+                    type: "spring",
+                    stiffness: 200
+                  }}
+                  className="absolute -top-4 -right-4 h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary"
+                  style={{ transform: "translateZ(40px)" }}
                 >
                   {i + 1}
                 </motion.div>
-                
-                {/* Icon */}
-                <motion.div 
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                  className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary"
-                >
-                  <step.icon className="h-8 w-8" />
-                </motion.div>
-                
-                {/* Content */}
-                <h3 className="mt-6 text-xl font-bold">{step.title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+
+                {/* Background Gradient on Hover */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileHover={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-transparent"
+                />
+
+                <div className="relative" style={{ transform: "translateZ(20px)" }}>
+                  {/* Icon */}
+                  <motion.div
+                    whileHover={{
+                      scale: 1.2,
+                      rotate: [0, -12, 12, -12, 0],
+                      transition: { duration: 0.6 }
+                    }}
+                    className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6"
+                  >
+                    <step.icon className="h-8 w-8" />
+                  </motion.div>
+
+                  <motion.h3
+                    className="text-xl font-bold mb-3"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {step.title}
+                  </motion.h3>
+
+                  <motion.p
+                    initial={{ opacity: 0.7 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-sm text-muted-foreground leading-relaxed"
+                  >
+                    {step.desc}
+                  </motion.p>
+                </div>
+
+                {/* Connecting Arrow (except last one) */}
+                {i < PROCESS_STEPS.length - 1 && (
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 0.3 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.15 + 0.6 }}
+                    className="hidden lg:block absolute top-1/2 -right-4 translate-x-full"
+                  >
+                    <ArrowRight className="h-6 w-6 text-primary" />
+                  </motion.div>
+                )}
+
+                {/* Shine Effect */}
+                <motion.div
+                  initial={{ x: "-100%", opacity: 0 }}
+                  whileHover={{ x: "200%", opacity: [0, 0.3, 0] }}
+                  transition={{ duration: 1.2, ease: "easeInOut" }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+                />
               </motion.div>
             </motion.div>
           ))}
@@ -752,48 +1218,123 @@ function Index() {
       {/* TESTIMONIALS */}
       <section className="bg-surface py-28 md:py-40">
         <div className="container-x">
-          <Reveal className="text-center max-w-3xl mx-auto">
-            <p className="eyebrow">Testimonials</p>
-            <h2 className="display mt-6 text-4xl md:text-6xl">Loved by our<br />customers.</h2>
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <motion.p variants={staggerItem} className="eyebrow">Testimonials</motion.p>
+            <motion.h2 variants={staggerItem} className="display mt-6 text-4xl md:text-6xl">Loved by our<br />customers.</motion.h2>
+            <motion.p variants={staggerItem} className="mt-6 text-lg text-muted-foreground leading-relaxed">
               Don't take our word for it — hear from the people who trust us with their spaces.
-            </p>
-          </Reveal>
+            </motion.p>
+          </motion.div>
 
           <div className="mt-16 grid gap-6 md:grid-cols-3">
             {TESTIMONIALS.map((testimonial, i) => (
-              <Reveal key={testimonial.name} delay={i * 100}>
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.15, duration: 0.5 }}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                  className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 hover:shadow-xl hover:border-primary/30 transition-all"
-                >
-                  <motion.div 
-                    className="flex gap-1 mb-6"
-                  >
+              <motion.div 
+                key={testimonial.name}
+                initial={{ 
+                  opacity: 0, 
+                  x: i % 2 === 0 ? -100 : 100,
+                  y: 60,
+                  rotateY: i % 2 === 0 ? -25 : 25
+                }}
+                whileInView={{ 
+                  opacity: 1, 
+                  x: 0,
+                  y: 0,
+                  rotateY: 0
+                }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ 
+                  delay: (i % 3) * 0.15, 
+                  duration: 0.9,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                whileHover={{ 
+                  y: -12, 
+                  scale: 1.03,
+                  rotateY: i % 2 === 0 ? 5 : -5,
+                  transition: { duration: 0.4 } 
+                }}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 shadow-lg hover:shadow-2xl transition-shadow duration-500"
+                style={{
+                  transformStyle: "preserve-3d",
+                  perspective: "1000px"
+                }}
+              >
+                {/* Background Glow */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileHover={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5"
+                />
+
+                <div className="relative" style={{ transform: "translateZ(20px)" }}>
+                  {/* Star Rating */}
+                  <motion.div className="flex gap-1 mb-6">
                     {[...Array(testimonial.rating)].map((_, idx) => (
                       <motion.div
                         key={idx}
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.15 + idx * 0.1, duration: 0.3 }}
+                        initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                        transition={{ 
+                          delay: i * 0.15 + idx * 0.08, 
+                          duration: 0.4,
+                          type: "spring",
+                          stiffness: 200
+                        }}
                         viewport={{ once: true }}
                       >
                         <Star className="h-5 w-5 fill-primary text-primary" />
                       </motion.div>
                     ))}
                   </motion.div>
-                  <p className="text-foreground leading-relaxed italic">"{testimonial.content}"</p>
-                  <div className="mt-6 pt-6 border-t border-border">
-                    <p className="font-bold">{testimonial.name}</p>
+
+                  <motion.p 
+                    initial={{ opacity: 0.8 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-foreground leading-relaxed italic mb-6"
+                  >
+                    "{testimonial.content}"
+                  </motion.p>
+
+                  <div className="pt-6 border-t border-border">
+                    <motion.p 
+                      className="font-bold"
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {testimonial.name}
+                    </motion.p>
                     <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                   </div>
-                  <div className="absolute top-6 right-6 text-6xl text-primary/5 font-serif">"</div>
+                </div>
+
+                {/* Quote Icon Background */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0, rotate: -45 }}
+                  whileInView={{ opacity: 0.05, scale: 1, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 + 0.3, duration: 0.6 }}
+                  className="absolute top-6 right-6 text-6xl text-primary font-serif pointer-events-none"
+                >
+                  "
                 </motion.div>
-              </Reveal>
+
+                {/* Shine Effect */}
+                <motion.div
+                  initial={{ x: "-100%", opacity: 0 }}
+                  whileHover={{ x: "200%", opacity: [0, 0.3, 0] }}
+                  transition={{ duration: 1, ease: "easeInOut" }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+                />
+              </motion.div>
             ))}
           </div>
         </div>
@@ -802,66 +1343,219 @@ function Index() {
       {/* FAQ SECTION */}
       <section className="container-x py-28 md:py-40">
         <div className="grid gap-12 md:grid-cols-12">
-          <Reveal className="md:col-span-5">
-            <p className="eyebrow">FAQ</p>
-            <h2 className="display mt-6 text-4xl md:text-5xl lg:text-6xl">Questions?<br />We've got<br />answers.</h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={slideInLeft}
+            className="md:col-span-5"
+          >
+            <motion.p variants={staggerItem} className="eyebrow">FAQ</motion.p>
+            <motion.h2 variants={staggerItem} className="display mt-6 text-4xl md:text-5xl lg:text-6xl">Questions?<br />We've got<br />answers.</motion.h2>
+            <motion.p variants={staggerItem} className="mt-6 text-muted-foreground leading-relaxed">
               Can't find what you're looking for? Our team is ready to help.
-            </p>
-            <Link to="/contact" className="group mt-8 inline-flex items-center gap-2 font-semibold text-primary">
-              Contact us <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </Reveal>
+            </motion.p>
+            <motion.div variants={staggerItem}>
+              <Link to="/contact" className="group mt-8 inline-flex items-center gap-2 font-semibold text-primary">
+                Contact us <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
+          </motion.div>
 
-          <div className="md:col-span-7">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+            className="md:col-span-7"
+          >
             {FAQ_ITEMS.map((faq, i) => (
-              <FAQItem key={faq.question} question={faq.question} answer={faq.answer} delay={i * 80} />
+              <motion.div
+                key={faq.question}
+                variants={staggerItem}
+              >
+                <FAQItem question={faq.question} answer={faq.answer} delay={i * 80} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* PROMO BANNER */}
       <section className="container-x pb-28 md:pb-40">
-        <Reveal>
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-foreground p-12 md:p-16 lg:p-20">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 50 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-foreground p-12 md:p-16 lg:p-20 shadow-2xl">
             <div className="absolute inset-0 bg-grid-white/5" />
-            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
-            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
+            
+            {/* Animated Background Blobs */}
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                x: [0, 30, 0],
+                y: [0, -30, 0],
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl"
+            />
+            <motion.div
+              animate={{
+                scale: [1.2, 1, 1.2],
+                x: [0, -30, 0],
+                y: [0, 30, 0],
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/10 blur-3xl"
+            />
+            
+            {/* Floating Sparkles */}
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0, 1.5, 0],
+                  y: [0, -50, -100],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                  ease: "easeOut"
+                }}
+                className="absolute"
+                style={{
+                  left: `${20 + i * 15}%`,
+                  bottom: '20%',
+                }}
+              >
+                <Sparkles className="h-6 w-6 text-yellow-300" />
+              </motion.div>
+            ))}
             
             <div className="relative text-center">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
-                <Users className="h-4 w-4" />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm"
+              >
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Users className="h-4 w-4" />
+                </motion.div>
                 Limited Time Offer
-              </div>
-              <h2 className="display mt-6 text-4xl md:text-5xl lg:text-6xl text-white">
-                First-Time Customer?<br />Get <span className="text-yellow-300">20% Off</span>
-              </h2>
-              <p className="mt-6 text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
+              </motion.div>
+              
+              <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.7 }}
+                className="display mt-6 text-4xl md:text-5xl lg:text-6xl text-white"
+              >
+                First-Time Customer?<br />
+                Get{" "}
+                <motion.span
+                  animate={{
+                    textShadow: [
+                      "0 0 20px rgba(253, 224, 71, 0.5)",
+                      "0 0 40px rgba(253, 224, 71, 0.8)",
+                      "0 0 20px rgba(253, 224, 71, 0.5)",
+                    ],
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="text-yellow-300"
+                >
+                  20% Off
+                </motion.span>
+              </motion.h2>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                className="mt-6 text-lg text-white/90 max-w-2xl mx-auto leading-relaxed"
+              >
                 Experience our professional service at a special introductory rate. Valid for all automotive, residential, and commercial cleaning services.
-              </p>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                <QuoteButton className="px-8 py-5 text-base bg-white text-foreground hover:bg-white/90" />
-                <Link to="/services" className="group inline-flex items-center gap-2 px-8 py-5 rounded-xl font-semibold text-white border-2 border-white/30 hover:bg-white/10 transition-colors">
-                  View Services
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="mt-10 flex flex-wrap items-center justify-center gap-4"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <QuoteButton className="px-8 py-5 text-base bg-white text-foreground hover:bg-white/90 shadow-xl" />
+                </motion.div>
+                
+                <Link to="/services">
+                  <motion.button
+                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group inline-flex items-center gap-2 px-8 py-5 rounded-xl font-semibold text-white border-2 border-white/30 transition-colors"
+                  >
+                    View Services
+                    <motion.div
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <ArrowRight className="h-5 w-5" />
+                    </motion.div>
+                  </motion.button>
                 </Link>
-              </div>
-              <p className="mt-6 text-sm text-white/70">*Offer valid for new customers only. Some restrictions apply.</p>
+              </motion.div>
+              
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 }}
+                className="mt-6 text-sm text-white/70"
+              >
+                *Offer valid for new customers only. Some restrictions apply.
+              </motion.p>
             </div>
           </div>
-        </Reveal>
+        </motion.div>
       </section>
 
       {/* CTA */}
       <section className="container-x py-28 md:py-40">
-        <Reveal className="grid gap-10 md:grid-cols-12 md:items-end">
-          <h2 className="display md:col-span-8 text-5xl md:text-7xl lg:text-8xl">The clean<br />you can <span className="text-primary">see.</span></h2>
-          <div className="md:col-span-4">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="grid gap-10 md:grid-cols-12 md:items-end"
+        >
+          <motion.h2 variants={staggerItem} className="display md:col-span-8 text-5xl md:text-7xl lg:text-8xl">
+            The clean<br />you can <span className="text-primary">see.</span>
+          </motion.h2>
+          <motion.div variants={staggerItem} className="md:col-span-4">
             <p className="text-muted-foreground leading-relaxed">Tell us what needs cleaning. We'll recommend the right service and get back to you with a quote.</p>
-            <QuoteButton className="mt-8 px-7 py-4 text-base" />
-          </div>
-        </Reveal>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <QuoteButton className="mt-8 px-7 py-4 text-base shadow-lg" />
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </section>
     </>
   );
