@@ -458,7 +458,7 @@ function Index() {
           {/* Car */}
           <motion.div 
             style={{ y: carY, opacity: carOpacity }}
-            className="relative z-10 w-full max-w-6xl px-4"
+            className="relative z-10 w-full max-w-6xl mx-auto"
           >
             <motion.div 
               initial={{ opacity: 0, scale: 0.85 }}
@@ -468,7 +468,7 @@ function Index() {
                 delay: 0.8,
                 ease: [0.22, 1, 0.36, 1]
               }}
-              className="relative pointer-events-auto cursor-crosshair"
+              className="relative pointer-events-auto cursor-crosshair px-2 sm:px-6 md:px-12"
             >
               {/* Text on Car Hood */}
               <motion.div 
